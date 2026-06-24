@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import {
@@ -94,21 +95,23 @@ function HeroSection() {
               </motion.p>
 
               {/* CTA Button */}
-              <motion.button
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  delay: 0.7,
-                  duration: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="group flex items-center bg-primary rounded-full pl-6 pr-2 py-2 text-black font-medium text-sm sm:text-base transition-all duration-300 gap-2 hover:gap-3 cursor-pointer"
-              >
-                <span>Join the lab</span>
-                <span className="bg-black rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ArrowRight className="w-5 h-5" style={{ color: "#DEDBC8" }} />
-                </span>
-              </motion.button>
+              <Link href="/sign-in" className="inline-block">
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    delay: 0.7,
+                    duration: 0.8,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="group flex items-center bg-primary rounded-full pl-6 pr-2 py-2 text-black font-medium text-sm sm:text-base transition-all duration-300 gap-2 hover:gap-3 cursor-pointer"
+                >
+                  <span>Sign in</span>
+                  <span className="bg-black rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    <ArrowRight className="w-5 h-5" style={{ color: "#DEDBC8" }} />
+                  </span>
+                </motion.button>
+              </Link>
             </div>
           </div>
         </div>
