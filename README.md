@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Course Generator & Prisma Creative Studio
 
-## Getting Started
+An advanced, full-stack Next.js application that integrates an AI-powered course creation platform with a gorgeous, dark, and cinematic landing page for a creative studio named **Prisma**.
 
-First, run the development server:
+---
 
+## 🎨 Prisma Landing Page features
+A dark, moody, and highly cinematic landing page that showcases visual arts and creative studio aesthetics.
+
+### 🌟 Sections:
+1. **Hero Section**:
+   - Inset responsive layout with container rounding (`rounded-2xl` to `md:rounded-[2rem]`).
+   - Autoplay, looped, and muted background video overlayed with a custom fractal noise SVG texture (`.noise-overlay`) and smooth bottom gradients.
+   - Glassmorphic floating pill navbar with smooth hover transitions.
+   - Giant header "Prisma" utilizing a custom `WordsPullUp` component with a superscript asterisk (`*`) on the final letter.
+   - Call to Action ("Join the lab") with responsive spacing and scaling animation on hover.
+
+2. **About Section**:
+   - Embedded inner card with a `#101010` backdrop.
+   - Rich multi-styled header statement using `WordsPullUpMultiStyle` combining normal typography with elegant italic serif font accenting ("a self-taught director").
+   - Scroll-linked character opacity reveal effect that gradually lights up text as you scroll past the paragraph.
+
+3. **Features Section**:
+   - 4-column responsive grid structure (`grid-cols-1 md:grid-cols-2 lg:grid-cols-4`).
+   - Staggered entry animation for all cards triggered once they enter the viewport.
+   - Interactive feature cards:
+     - **Card 1**: Autoplay background loop video illustrating the visual canvas.
+     - **Cards 2-4**: Smart Project Storyboards, AI Critiques, and Immersion Focus Capsule setups. Includes specific workflow checklist details, premium icons, and -45° rotated arrow details.
+
+---
+
+## 🧠 AI Course Generator Core Features
+An automated course builder that leverages generative AI to dynamically curate complete courses including text, structure, and videos.
+
+### ⚡ Key Capabilities:
+* **Interactive Course Wizard**: Select Category, add topics, describe goals, select course duration, difficulty levels, number of chapters, and toggle video integration.
+* **Google Gemini AI Integration**: Generates structured JSON outputs defining course outlines, chapter goals, and comprehensive texts.
+* **YouTube Video Syncing**: Integrates automated YouTube API lookups to embed contextually accurate, relevant videos for each chapter.
+* **Database Persistence**: Powered by **Drizzle ORM** with schema definitions for `courseList` and `chapters` storing structural JSON nodes.
+* **Secure Authentication**: Integrated with **Clerk Auth** for user login, custom profiles, and secure metadata synchronization.
+* **Publishing & Sharing**: Dashboard tracking for created courses, course banner templates, and toggleable public sharing routes.
+
+---
+
+## 🛠️ Tech Stack
+* **Framework**: Next.js 14 (App Router)
+* **Styling**: Tailwind CSS, Vanilla CSS (fractal noise SVG overlays)
+* **Database & ORM**: Supabase, Drizzle ORM, Neon PostgreSQL serverless
+* **AI Provider**: `@google/generative-ai` (Gemini API)
+* **Auth**: Clerk
+* **Animations**: Framer Motion
+* **Icons**: Lucide React, React Icons
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set Up Environment Variables
+Create a `.env` or `.env.local` file at the root of the project with the following variables:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_pub_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+GEMINI_API_KEY=your_gemini_api_key
+YOUTUBE_API_KEY=your_youtube_api_key
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+DATABASE_URL=your_database_url
+```
 
-## Learn More
+### 3. Spin Up the Database
+Sync your PostgreSQL database with the Drizzle schema:
+```bash
+npm run db:push
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the active dev application.
