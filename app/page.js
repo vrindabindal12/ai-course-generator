@@ -88,9 +88,7 @@ function HeroSection() {
                 }}
                 className="text-primary/70 text-xs sm:text-sm md:text-base leading-[1.2]"
               >
-                Prisma is a worldwide network of visual artists, filmmakers and storytellers bound
-                not by place, status or labels but by passion and hunger to unlock potential through
-                our unique perspectives.
+                Prisma is an intelligent learning laboratory designed to turn complex topics into structured, personalized, and video-rich curriculums, empowering curious minds to unlock their potential through generative guidance.
               </motion.p>
 
               {/* CTA Button */}
