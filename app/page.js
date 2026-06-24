@@ -88,7 +88,9 @@ function HeroSection() {
                 }}
                 className="text-primary/70 text-xs sm:text-sm md:text-base leading-[1.2]"
               >
-                Prisma is an intelligent learning laboratory designed to turn complex topics into structured, personalized, and video-rich curriculums, empowering curious minds to unlock their potential through generative guidance.
+                Prisma is an intelligent, AI-powered learning workspace that instantly transforms
+                complex topics into structured, video-curated courses. We break down the barriers of
+                traditional curriculum planning, empowering you to master any subject at your own pace.
               </motion.p>
 
               {/* CTA Button */}
