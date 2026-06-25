@@ -47,39 +47,40 @@ const Sidebar = () => {
         }
     ]
   return (
-    <div className='fixed md:w-64 h-full p-5 shadow-md'>
-        <Image src={'/logo.png'} width={150} height={100}/>
-        <hr className='my-5'/>
+    <div className='fixed md:w-64 h-full p-5 border-r border-neutral-900 bg-black flex flex-col justify-between text-[#E1E0CC]'>
+      <div>
+        <div className="text-2xl font-bold text-[#E1E0CC] tracking-wide flex items-center p-3 select-none">
+          Prisma<span className="text-primary text-xs ml-0.5 align-super">*</span>
+        </div>
+        <hr className='my-5 border-neutral-900'/>
         <ul>
             {Menu.map((item,index) => (
                 <Link href={item.link} key={index}>
-                   <div className={`flex items-center gap-2 text-gray-500 p-3 cursor-pointer
-                hover:bg-gray-100 hover:text-black rounded-lg mb-3
-                ${path===item.link && 'bg-gray-100 text-black' }`}>
-                   <div className='text-2xl'>{item.icon} </div>
-                   <h2>{item.name}</h2>
-                </div> 
+                   <div className={`flex items-center gap-3 p-3 cursor-pointer rounded-lg mb-3 transition-all duration-200 select-none
+                     ${path===item.link 
+                       ? 'bg-[#212121] text-[#E1E0CC] border border-neutral-800' 
+                       : 'text-gray-500 hover:bg-[#151515] hover:text-[#E1E0CC]'
+                     }`}>
+                     <div className='text-2xl'>{item.icon} </div>
+                     <h2 className="text-sm font-medium">{item.name}</h2>
+                   </div> 
                 </Link>
-                
             ))}
         </ul>
-        <div className='absolute bottom-10 w-[80%]'>
-        <Progress value={(userCourseList?.length / 5) * 100} />
+      </div>
 
-        <h2 className="text-sm my-2">
+      <div className='w-full mb-5'>
+        <Progress value={(userCourseList?.length / 5) * 100} className="h-1.5 bg-neutral-800 [&>div]:bg-[#DEDBC8]" />
+
+        <h2 className="text-xs my-2 text-gray-400">
           {userCourseList?.length} Out of 5 Course Created
         </h2>
         <Link href="/dashboard/upgrade">
-          <h2
-            className={`text-xs hover:underline text-gray-700 ${
-              (userCourseList?.length / 5) * 100 >= 60 && "text-blue-700"
-            }`}
-          >
+          <h2 className="text-[10px] hover:underline text-gray-500 hover:text-[#E1E0CC] transition-colors duration-200 leading-relaxed">
             Upgrade your plan for unlimited course generation
           </h2>
         </Link>
-        </div>
-
+      </div>
     </div>
   )
 }

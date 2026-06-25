@@ -61,7 +61,7 @@ function CourseCard({ course, refreshData, displayUser = false }) {
   };
 
   return (
-    <div className="shadow-sm rounded-lg border p-2 hover:scale-105 transition-all cursor-pointer mt-4">
+    <div className="bg-[#151515] border border-neutral-800 rounded-xl p-3 hover:scale-[1.02] hover:border-neutral-700 transition-all duration-300 cursor-pointer mt-4 shadow-lg shadow-black/30">
       <Link
         href={
           course?.publish
@@ -79,33 +79,33 @@ function CourseCard({ course, refreshData, displayUser = false }) {
       </Link>
 
       <div className="p-2">
-        <h2 className="font-medium text-lg flex justify-between items-center">
+        <h2 className="font-medium text-lg flex justify-between items-center text-[#E1E0CC]">
           {course?.courseOutput?.CourseName}
           {!displayUser && (
             <DropDown
               courseId={course?.courseId}
               handleOnDelete={() => handleOnDelete()}
             >
-              <HiEllipsisVertical />
+              <HiEllipsisVertical className="text-gray-400 hover:text-[#E1E0CC] transition-colors" />
             </DropDown>
           )}
         </h2>
 
-        <p className="my-1 text-sm text-gray-500">{course?.category}</p>
-        <div className="flex items-center justify-between">
-          <h2 className="flex gap-2 items-center p-1 rounded-sm bg-primary/40 text-primary text-sm">
-            <HiOutlineBookOpen />
+        <p className="my-1 text-xs text-gray-500 font-medium uppercase tracking-wider">{course?.category}</p>
+        <div className="flex items-center justify-between mt-3">
+          <h2 className="flex gap-1.5 items-center px-2 py-0.5 rounded-full bg-neutral-800 text-primary text-xs font-medium">
+            <HiOutlineBookOpen className="w-3.5 h-3.5" />
             {course?.courseOutput?.NoOfChapters} Chapters
           </h2>
 
           {!displayUser && course?.publish == false && (
             <Link href={`/create-course/${course?.courseId}`}>
-              <h2 className="rounded-sm hidden md:block hover:bg-red-600  bg-red-500 text-white text-sm p-1">
+              <h2 className="rounded-full hidden md:block hover:bg-red-600 bg-red-500 text-white text-xs px-2 py-0.5 font-semibold">
                 Draft
               </h2>
             </Link>
           )}
-          <h2 className=" rounded-sm bg-primary/40 text-primary text-sm p-1">
+          <h2 className="rounded-full bg-neutral-800 text-primary text-xs px-2 py-0.5 font-medium">
             {course?.level}
           </h2>
         </div>
@@ -119,14 +119,14 @@ function CourseCard({ course, refreshData, displayUser = false }) {
             alt="user profile image"
             className="rounded-full"
           />
-          <h2>{course?.userName}</h2>
+          <h2 className="text-xs text-gray-400">{course?.userName}</h2>
         </div>
       )}
 
       {!displayUser && course?.publish == false && (
         <Link href={`/create-course/${course?.courseId}`}>
           <div className="flex items-center justify-center mt-2 md:hidden">
-            <h2 className="rounded-sm hover:bg-red-600  bg-red-500 text-white text-sm p-1">
+            <h2 className="rounded-full hover:bg-red-600 bg-red-500 text-white text-xs px-2 py-0.5 font-semibold">
               Draft
             </h2>
           </div>
