@@ -104,12 +104,12 @@ function FinishScreen({ params }) {
           </div>
           <h2 className="mt-3">Course URL : </h2>
           <h2 className="text-center flex items-center gap-5 justify-center text-gray-400 border p-2 rounded">
-            {process.env.NEXT_PUBLIC_HOST_NAME}/course/{courseId}
+            {typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}/course/{courseId}
             <HiOutlineClipboardDocumentCheck
               className="h-5 w-5 cursor-pointer"
               onClick={async () =>
                 await navigator.clipboard.writeText(
-                  `${process.env.NEXT_PUBLIC_HOST_NAME}/course/${courseId}`
+                  `${typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}/course/${courseId}`
                 )
               }
             />
@@ -118,7 +118,7 @@ function FinishScreen({ params }) {
             <h2>Share : </h2>
             <WhatsappShareButton
               title="Check out this course from SeedOfCode. "
-              url={`${process.env.NEXT_PUBLIC_HOST_NAME}/course/${courseId}`}
+              url={`${typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}/course/${courseId}`}
               windowWidth={800}
               windowHeight={600}
               separator={`Course Name : ${course?.courseOutput?.CourseName} \n Created By : ${course?.userName} \nClick on the link to view the course : `}
@@ -127,7 +127,7 @@ function FinishScreen({ params }) {
             </WhatsappShareButton>
 
             <EmailShareButton
-              url={`${process.env.NEXT_PUBLIC_HOST_NAME}/course/${courseId}`}
+              url={`${typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}/course/${courseId}`}
               windowWidth={800}
               windowHeight={600}
               subject={`SeedOfCode Course : ${course?.courseOutput?.CourseName}`}
@@ -140,8 +140,8 @@ function FinishScreen({ params }) {
             <LinkedinShareButton
               title="Check out this course from SeedOfCode. "
               summary={`\nCourse Name : ${course?.courseOutput?.CourseName}\n Created By : ${course?.userName} \nClick on the link to view the course : `}
-              source={`https://ai-course-generator-gamma-snowy.vercel.app/`}
-              url={`${process.env.NEXT_PUBLIC_HOST_NAME}/course/${courseId}`}
+              source={typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}
+              url={`${typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_HOST_NAME || "http://localhost:3000")}/course/${courseId}`}
             >
               <LinkedinIcon size={30} round={true} />
             </LinkedinShareButton>
