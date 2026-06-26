@@ -7,6 +7,8 @@ import React, { useContext, useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import { UserCourseListContext } from "@/app/_context/UserCourseListContext";
 import { useToast } from "@/hooks/use-toast";
+import { HiOutlineBookOpen } from "react-icons/hi2";
+import Link from "next/link";
 
 function UserCourseList() {
   const [courseList, setCourseList] = useState([]);
@@ -18,7 +20,6 @@ function UserCourseList() {
   const { user } = useUser();
   useEffect(() => {
     user && getUserCourses();
-    // console.log("User : " + user?.fullName);
   }, [user]);
 
   const getUserCourses = async () => {
@@ -31,7 +32,6 @@ function UserCourseList() {
         )
         .orderBy(desc(CourseList.id));
 
-      // console.log(result);
       setCourseList(result);
       setUserCourseList(result);
       localStorage.setItem("userCourseList", JSON.stringify(result));
@@ -48,22 +48,26 @@ function UserCourseList() {
   };
 
   return (
-    <div className="mt-10">
-      <h2 className="font-medium text-xl">My AI Courses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="mt-12">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="font-semibold text-xl tracking-tight text-[#E1E0CC]">My AI Courses</h2>
+        <span className="text-xs text-neutral-500 font-mono">{courseList?.length || 0} active courses</span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           [1, 2, 3, 4, 5, 6].map((item, index) => (
             <div
               key={index}
-              className="shadow-sm rounded-lg border p-2 mt-4 animate-pulse"
+              className="bg-[#151515] border border-neutral-900 rounded-xl p-3 animate-pulse"
             >
-              <div className="w-full h-[200px] bg-gray-300 rounded-lg"> </div>
+              <div className="w-full h-[200px] bg-[#212121] rounded-lg"></div>
               <div className="p-2">
-                <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"> </div>
-                <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"> </div>
+                <div className="h-5 bg-[#212121] rounded w-3/4 mb-3 mt-2"></div>
+                <div className="h-3 bg-[#212121] rounded w-1/2 mb-4"></div>
                 <div className="flex items-center justify-between">
-                  <div className="h-6 bg-gray-300 rounded w-1/3"> </div>
-                  <div className="h-6 bg-gray-300 rounded w-1/4"> </div>
+                  <div className="h-5 bg-[#212121] rounded w-1/3"></div>
+                  <div className="h-5 bg-[#212121] rounded w-1/4"></div>
                 </div>
               </div>
             </div>
@@ -77,10 +81,19 @@ function UserCourseList() {
             />
           ))
         ) : (
-          <div className="flex items-center justify-center md:w-[70vw] h-96">
-            <h2 className="text-gray-500">
-              Please create your first AI course.
-            </h2>
+          <div className="flex flex-col items-center justify-center text-center col-span-full py-20 px-6 border border-dashed border-neutral-800 rounded-2xl bg-[#111111]/30">
+            <div className="w-12 h-12 rounded-full bg-neutral-900 flex items-center justify-center border border-neutral-800 text-neutral-400 mb-4">
+              <HiOutlineBookOpen className="w-6 h-6" />
+            </div>
+            <h3 className="text-[#E1E0CC] font-medium text-lg">No courses generated yet</h3>
+            <p className="text-sm text-neutral-500 max-w-sm mt-1 mb-6">
+              Ready to learn something new? Build your first custom workspace by running the AI Generator.
+            </p>
+            <Link href="/create-course">
+              <button className="bg-[#DEDBC8] hover:bg-[#E1E0CC] text-black font-semibold text-xs sm:text-sm rounded-full px-5 py-2.5 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
+                Start Generating
+              </button>
+            </Link>
           </div>
         )}
       </div>
