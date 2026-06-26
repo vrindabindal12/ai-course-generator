@@ -61,30 +61,39 @@ function EditChapters({ course, index, refreshData }) {
   return (
     <div>
       <Dialog>
-        <DialogTrigger>
-          <HiPencilSquare />
+        <DialogTrigger asChild>
+          <button className="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-[#DEDBC8] hover:bg-neutral-800 hover:text-[#E1E0CC] transition-all duration-200">
+            <HiPencilSquare className="w-4 h-4" />
+          </button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="bg-[#151515] border-neutral-900 text-[#E1E0CC] max-w-md rounded-2xl p-6">
           <DialogHeader>
-            <DialogTitle>Edit Chapter</DialogTitle>
-            <DialogDescription>
-              Please update the chapter title and about below.
+            <DialogTitle className="text-xl font-medium tracking-tight text-[#E1E0CC]">
+              Edit Chapter
+            </DialogTitle>
+            <DialogDescription className="text-xs text-neutral-400 mt-1">
+              Please update the chapter title and about description below.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="text-gray-500 text-sm">
-            <div className="mt-3">
-              <label>Chapter Name</label>
+          <div className="space-y-4 my-4">
+            <div>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5 block">
+                Chapter Name
+              </label>
               <Input
+                className="bg-neutral-900 border-neutral-800 text-[#E1E0CC] focus:ring-primary focus:border-primary rounded-lg p-3 text-sm h-10 w-full"
                 onChange={(e) => setChapterName(e.target.value)}
                 defaultValue={Chapters[index]?.ChapterName}
               />
             </div>
-            <div className="mt-3">
-              <label>About</label>
+            <div>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5 block">
+                About
+              </label>
               <Textarea
+                className="bg-neutral-900 border-neutral-800 text-[#E1E0CC] focus:ring-primary focus:border-primary rounded-lg p-3 text-sm h-36 w-full resize-none"
                 onChange={(e) => setAbout(e.target.value)}
-                className="h-40"
                 defaultValue={Chapters[index]?.About}
               />
             </div>
@@ -92,7 +101,12 @@ function EditChapters({ course, index, refreshData }) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button onClick={() => onUpdateHandler()}>Update</Button>
+              <button
+                onClick={() => onUpdateHandler()}
+                className="bg-[#DEDBC8] hover:bg-[#E1E0CC] text-black font-semibold text-xs sm:text-sm rounded-full px-6 py-2.5 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md flex items-center justify-center"
+              >
+                Update
+              </button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
