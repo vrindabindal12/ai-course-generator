@@ -49,9 +49,11 @@ const Sidebar = () => {
   return (
     <div className='fixed md:w-64 h-full p-5 border-r border-neutral-900 bg-black flex flex-col justify-between text-[#E1E0CC]'>
       <div>
-        <div className="text-2xl font-bold text-[#E1E0CC] tracking-wide flex items-center p-3 select-none">
-          Prisma<span className="text-primary text-xs ml-0.5 align-super">*</span>
-        </div>
+        <Link href="/">
+          <div className="text-2xl font-bold text-[#E1E0CC] tracking-wide flex items-center p-3 select-none cursor-pointer">
+            Prisma<span className="text-primary text-xs ml-0.5 align-super">*</span>
+          </div>
+        </Link>
         <hr className='my-5 border-neutral-900'/>
         <ul>
             {Menu.map((item,index) => (

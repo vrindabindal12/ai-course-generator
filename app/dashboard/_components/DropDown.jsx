@@ -50,16 +50,20 @@ function DropDown({ courseId, children, handleOnDelete }) {
       </DropdownMenu>
 
       <AlertDialog open={alertOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[#101010] border border-neutral-800 rounded-2xl p-6 sm:max-w-md shadow-2xl shadow-black/80">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently your data from
-              our servers.
+            <AlertDialogTitle className="text-lg font-semibold text-[#E1E0CC] tracking-tight">
+              Are you absolutely sure?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-xs text-neutral-400 leading-relaxed mt-1">
+              This action cannot be undone. This will permanently delete this course and all its associated chapters from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setAlertOpen(false)}>
+          <AlertDialogFooter className="mt-6 gap-3">
+            <AlertDialogCancel
+              onClick={() => setAlertOpen(false)}
+              className="rounded-full border border-neutral-800 bg-transparent text-neutral-300 hover:bg-neutral-900 hover:text-white px-5 py-2 text-xs font-medium cursor-pointer transition-colors"
+            >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
@@ -67,8 +71,9 @@ function DropDown({ courseId, children, handleOnDelete }) {
                 handleOnDelete();
                 setAlertOpen(false);
               }}
+              className="rounded-full bg-red-600 text-white hover:bg-red-500 px-5 py-2 text-xs font-medium cursor-pointer border border-transparent transition-colors"
             >
-              Continue
+              Delete Course
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
