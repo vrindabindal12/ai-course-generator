@@ -95,41 +95,42 @@ function CourseStart({ params }) {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-black">
       {/* Chapter list Side Bar : LHS */}
       <div
-        className={`fixed md:w-72 overflow-scroll bg-white ${
+        className={`fixed md:w-72 overflow-y-auto bg-black border-r border-neutral-900 ${
           handleSidebar ? "block w-80 z-50" : "hidden"
-        } md:block h-screen border-r shadow-sm`}
+        } md:block h-screen shadow-lg`}
       >
-        <div className="flex bg-primary text-white justify-between p-4 items-center">
-          <h2 className="font-medium text-lg">
+        <div className="flex bg-[#151515] border-b border-neutral-900 text-[#E1E0CC] justify-between p-4 items-center">
+          <h2 className="font-medium text-sm sm:text-base tracking-tight line-clamp-1">
             {courseLoading ? (
-              <Skeleton width={150} />
+              <Skeleton width={120} baseColor="#202020" highlightColor="#303030" />
             ) : (
               course?.courseOutput?.CourseName
             )}
           </h2>
           <HiChevronDoubleLeft
-            size={25}
-            className="cursor-pointer md:hidden hover:text-black pt-1"
+            size={20}
+            className="cursor-pointer md:hidden hover:text-white transition-colors"
             onClick={() => setHandleSidebar(false)}
           />
         </div>
 
-        <div>
+        <div className="flex flex-col">
           {courseLoading
             ? Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="p-4">
-                  <Skeleton height={40} />
+                <div key={index} className="p-4 border-b border-neutral-900">
+                  <Skeleton height={40} baseColor="#202020" highlightColor="#303030" />
                 </div>
               ))
             : course?.courseOutput?.Chapters.map((chapter, index) => (
                 <div
                   key={index}
-                  className={`cursor-pointer hover:bg-primary/30 ${
-                    selectedChapter?.ChapterName === chapter?.ChapterName &&
-                    "bg-primary/30"
+                  className={`cursor-pointer transition-colors duration-200 border-l-2 group ${
+                    selectedChapter?.ChapterName === chapter?.ChapterName
+                      ? "bg-[#151515] border-primary text-white"
+                      : "bg-transparent border-transparent text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200"
                   }`}
                   onClick={() => {
                     setSelectedChapter(chapter);
@@ -143,12 +144,12 @@ function CourseStart({ params }) {
       </div>
 
       {/* Content Div : RHS */}
-      <div className="md:ml-72 p-10">
+      <div className="md:ml-72 p-6 md:p-10 min-h-screen bg-black">
         {contentLoading ? (
-          <div>
-            <Skeleton height={30} width={200} />
-            <Skeleton height={200} className="my-5" />
-            <Skeleton height={150} count={3} className="my-3" />
+          <div className="max-w-4xl mx-auto px-4 md:px-8 mt-10">
+            <Skeleton height={30} width={200} baseColor="#202020" highlightColor="#303030" />
+            <Skeleton height={200} className="my-5" baseColor="#202020" highlightColor="#303030" />
+            <Skeleton height={150} count={3} className="my-3" baseColor="#202020" highlightColor="#303030" />
           </div>
         ) : (
           <ChapterContent
