@@ -1,4 +1,4 @@
-# 🎓 AI Course Generator
+# AI Course Generator
 
 An advanced, full-stack, enterprise-grade Next.js application that automatically curates complete, structured, and visually engaging learning paths. By leveraging the power of **Google Gemini Generative AI** and the **YouTube Data API v3**, the platform builds instantaneous, personalized curriculums containing structured reading material, code sandboxes, and highly relevant video lectures.
 
@@ -31,31 +31,31 @@ An advanced, full-stack, enterprise-grade Next.js application that automatically
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
-1. [Overview & Key Value Props](#-overview--key-value-props)
-2. [Key Features](#%EF%B8%8F-key-features)
-3. [System Architecture](#%EF%B8%8F-system-architecture)
-4. [System & Data Workflow](#-system--data-workflow)
-5. [Repository Structure](#-repository-structure)
-6. [Tech Stack & Architecture Rationale](#-tech-stack--architecture-rationale)
-7. [Database & Storage Design](#-database--storage-design)
+1. [Overview & Key Value Props](#overview--key-value-props)
+2. [Key Features](#key-features)
+3. [System Architecture](#system-architecture)
+4. [System & Data Workflow](#system--data-workflow)
+5. [Repository Structure](#repository-structure)
+6. [Tech Stack & Architecture Rationale](#tech-stack--architecture-rationale)
+7. [Database & Storage Design](#database--storage-design)
     - [1. Database Schema (Neon PostgreSQL via Drizzle ORM)](#1-database-schema-neon-postgresql-via-drizzle-orm)
     - [2. Storage Configuration (Supabase Storage)](#2-storage-configuration-supabase-storage)
-8. [Getting Started & Local Setup](#-getting-started--local-setup)
+8. [Getting Started & Local Setup](#getting-started--local-setup)
     - [Prerequisites](#prerequisites)
     - [Step 1: Clone Repository & Install Dependencies](#step-1-clone-repository--install-dependencies)
     - [Step 2: Configure Environment Variables](#step-2-configure-environment-variables)
     - [Step 3: Database & ORM Initialization](#step-3-database--orm-initialization)
     - [Step 4: Launch the Local Server](#step-4-launch-the-local-server)
-9. [Production Deployment Guide](#%EF%B8%8F-production-deployment-guide)
-10. [Roadmap & Future Goals](#-roadmap--future-goals)
-11. [Contributing Guidelines](#-contributing-guidelines)
-12. [License](#-license)
+9. [Production Deployment Guide](#production-deployment-guide)
+10. [Roadmap & Future Goals](#roadmap--future-goals)
+11. [Contributing Guidelines](#contributing-guidelines)
+12. [License](#license)
 
 ---
 
-## 🌟 Overview & Key Value Props
+## Overview & Key Value Props
 
 In the modern digital landscape, finding a structured learning curriculum requires hours of manual sorting through fragmented documentation, videos, and articles. The **AI Course Generator** solves this problem by instantly synthesising personalized, end-to-end educational courses. 
 
@@ -65,18 +65,18 @@ In the modern digital landscape, finding a structured learning curriculum requir
 
 ---
 
-## 🛠️ Key Features
+## Key Features
 
-* 🧙‍♂️ **Interactive Stepper Generation Wizard**: An easy-to-use multi-step course planner allowing users to customize target categories (e.g. Science, Programming, Health), difficulty levels (Beginner, Intermediate, Advanced), and select options to include video content.
-* 🧠 **Deterministic Outline Structuring**: Leverages structured JSON output constraints within Google Gemini models to generate predictable, highly nested, validation-safe curriculums.
-* 🎥 **Contextual Media Integration**: Intelligently queries the YouTube Data API using context-aware search strings, syncing corresponding video playlists right into the layout.
-* 💾 **Seamless Media & Asset Storage**: Integrates Supabase storage bucket workflows so users can custom upload and remove graphical course cover banners directly from the browser.
-* 🔐 **Secure Session Guards**: Implements Next.js middleware and JWT Session validations via Clerk, safeguarding database write calls and customized student panels.
-* 📱 **Modern & Accessible UX**: Styled with premium HSL-tailored dark modes, smooth hover and entrance transitions (powered by Framer Motion), and customizable dialog modules.
+* **Interactive Stepper Generation Wizard**: An easy-to-use multi-step course planner allowing users to customize target categories (e.g. Science, Programming, Health), difficulty levels (Beginner, Intermediate, Advanced), and select options to include video content.
+* **Deterministic Outline Structuring**: Leverages structured JSON output constraints within Google Gemini models to generate predictable, highly nested, validation-safe curriculums.
+* **Contextual Media Integration**: Intelligently queries the YouTube Data API using context-aware search strings, syncing corresponding video playlists right into the layout.
+* **Seamless Media & Asset Storage**: Integrates Supabase storage bucket workflows so users can custom upload and remove graphical course cover banners directly from the browser.
+* **Secure Session Guards**: Implements Next.js middleware and JWT Session validations via Clerk, safeguarding database write calls and customized student panels.
+* **Modern & Accessible UX**: Styled with premium HSL-tailored dark modes, smooth hover and entrance transitions (powered by Framer Motion), and customizable dialog modules.
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
 The following block diagram represents the relationship between the client user interface, the serverless database persistence layer, API connectors, and external microservices:
 
@@ -118,7 +118,7 @@ graph TD
 
 ---
 
-## 🔄 System & Data Workflow
+## System & Data Workflow
 
 The sequential steps from a user defining a course configuration to reading the compiled lesson are mapped out below:
 
@@ -155,7 +155,7 @@ sequenceDiagram
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 The code directory is structured logically to separate component libraries, API endpoints, schema definitions, and third-party configuration clients.
 
@@ -197,7 +197,7 @@ ai-course-generator/
 
 ---
 
-## 💻 Tech Stack & Architecture Rationale
+## Tech Stack & Architecture Rationale
 
 The architecture was chosen to emphasize performance, serverless scaling, clean relational querying, and rapid development speed.
 
@@ -213,13 +213,13 @@ The architecture was chosen to emphasize performance, serverless scaling, clean 
 
 ---
 
-## 💾 Database & Storage Design
+## Database & Storage Design
 
 ### 1. Database Schema (Neon PostgreSQL via Drizzle ORM)
 
 Located in [configs/schema.js](file:///c:/Users/vrind/OneDrive/Desktop/ai-course-generator/configs/schema.js), the tables use a relational layout optimized for quick reads and structured updates.
 
-#### 📁 `CourseList` Table (Parent Outlines)
+#### CourseList Table (Parent Outlines)
 Stores primary configurations, cover links, settings, and full outlines generated by the AI:
 ```javascript
 export const CourseList = pgTable("courseList", {
@@ -238,7 +238,7 @@ export const CourseList = pgTable("courseList", {
 })
 ```
 
-#### 📖 `Chapters` Table (Lesson Content)
+#### Chapters Table (Lesson Content)
 Holds deep chapter text materials, step descriptions, and synchronized video lists:
 ```javascript
 export const Chapters = pgTable("chapters", {
@@ -260,7 +260,7 @@ The application features custom banner uploads. Images uploaded by users are sav
 
 ---
 
-## 🚀 Getting Started & Local Setup
+## Getting Started & Local Setup
 
 Follow these structured instructions to configure, initialize, and run a local instance of the AI Course Generator.
 
@@ -339,7 +339,7 @@ Open [http://localhost:3000](http://localhost:3000) in your web browser. You can
 
 ---
 
-## 🛠️ Production Deployment Guide
+## Production Deployment Guide
 
 This app is optimized for serverless hosting providers like **Vercel** or **Netlify**.
 
@@ -351,7 +351,7 @@ This app is optimized for serverless hosting providers like **Vercel** or **Netl
 
 ---
 
-## 🗺️ Roadmap & Future Goals
+## Roadmap & Future Goals
 
 - [ ] **Interactive Quizzes**: Generate contextual multiple-choice assessments at the end of each chapter using Google Gemini.
 - [ ] **Export to PDF & Markdown**: Download full curricula and study notes locally for offline reading.
@@ -360,7 +360,7 @@ This app is optimized for serverless hosting providers like **Vercel** or **Netl
 
 ---
 
-## 🤝 Contributing Guidelines
+## Contributing Guidelines
 
 Contributions are welcome! If you want to contribute, please follow these guidelines:
 
@@ -372,10 +372,10 @@ Contributions are welcome! If you want to contribute, please follow these guidel
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` file for more details.
 
 ---
 
-<p align="center">Made with ❤️ by the AI Course Generator Team</p>
+<p align="center">Made by the AI Course Generator Team</p>
