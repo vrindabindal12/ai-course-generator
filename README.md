@@ -159,7 +159,7 @@ The code directory is structured logically to separate component libraries, API 
 ai-course-generator/
 ├── app/                          # Next.js App Router (Entrypoint)
 │   ├── (auth)/                   # Authentication pages (Sign-in, Sign-up) managed via Clerk
-│   ├── _components/              # Shared high-level layouts, navigation headers, and footer components
+│   ├── _components/              # Shared components (Header, Hero, PrismaComponents, PricingSection, TestimonialsSection)
 │   ├── _context/                 # UserInputContext for state management throughout wizard stages
 │   ├── _shared/                  # Utilities, constant schemas, and formatting helpers
 │   ├── course/
