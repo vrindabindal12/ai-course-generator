@@ -1,209 +1,381 @@
-# AI Course Generator
+# 🎓 AI Course Generator
 
-AI Course Generator is an advanced, full-stack Next.js web application designed to automatically curate complete, structured, and visually engaging courses based on user-defined topics and goals. By pairing Google Gemini Generative AI with the YouTube API, the platform builds instant, personalized curriculums complete with educational videos and structured chapter lessons.
-
----
-
-## Key Features
-
-* **AI-Guided Generation Wizard**: Dynamic multi-step creation engine with custom prompts configured for topic category, difficulty level, and chapter counts.
-* **Intelligent Media Syncing**: Automated search queries sync contextually relevant YouTube educational videos with corresponding AI-generated outlines to provide a multi-modal learning experience.
-* **Adaptive Course Views**: Integrated markdown parser rendering structured text lessons complete with embedded media and formatted code snippets.
-* **Production-Ready Relational Design**: Custom-designed relational schemas mapped using Drizzle ORM and backed by Neon serverless connection pooling for robust query performance.
+An advanced, full-stack, enterprise-grade Next.js application that automatically curates complete, structured, and visually engaging learning paths. By leveraging the power of **Google Gemini Generative AI** and the **YouTube Data API v3**, the platform builds instantaneous, personalized curriculums containing structured reading material, code sandboxes, and highly relevant video lectures.
 
 ---
 
-## System Architecture
+<p align="center">
+  <a href="https://nextjs.org/">
+    <img src="https://img.shields.io/badge/Next.js-14.2-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js">
+  </a>
+  <a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
+  </a>
+  <a href="https://tailwindcss.com/">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+  </a>
+  <br>
+  <a href="https://deepmind.google/technologies/gemini/">
+    <img src="https://img.shields.io/badge/Gemini_AI-1.5_Flash-4285F4?style=for-the-badge&logo=google-gemini&logoColor=white" alt="Google Gemini">
+  </a>
+  <a href="https://clerk.com/">
+    <img src="https://img.shields.io/badge/Clerk_Auth-Secure-6C47FF?style=for-the-badge&logo=clerk&logoColor=white" alt="Clerk Auth">
+  </a>
+  <a href="https://neon.tech/">
+    <img src="https://img.shields.io/badge/Neon_Database-PostgreSQL-00E599?style=for-the-badge&logo=neon&logoColor=black" alt="Neon PostgreSQL">
+  </a>
+  <a href="https://supabase.com/">
+    <img src="https://img.shields.io/badge/Supabase-Storage-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase Storage">
+  </a>
+</p>
 
-This diagram illustrates how the frontend client, next.js server environment, relational database, authentication provider, and AI/video services interact:
+---
+
+## 📖 Table of Contents
+
+1. [Overview & Key Value Props](#-overview--key-value-props)
+2. [Key Features](#%EF%B8%8F-key-features)
+3. [System Architecture](#%EF%B8%8F-system-architecture)
+4. [System & Data Workflow](#-system--data-workflow)
+5. [Repository Structure](#-repository-structure)
+6. [Tech Stack & Architecture Rationale](#-tech-stack--architecture-rationale)
+7. [Database & Storage Design](#-database--storage-design)
+    - [1. Database Schema (Neon PostgreSQL via Drizzle ORM)](#1-database-schema-neon-postgresql-via-drizzle-orm)
+    - [2. Storage Configuration (Supabase Storage)](#2-storage-configuration-supabase-storage)
+8. [Getting Started & Local Setup](#-getting-started--local-setup)
+    - [Prerequisites](#prerequisites)
+    - [Step 1: Clone Repository & Install Dependencies](#step-1-clone-repository--install-dependencies)
+    - [Step 2: Configure Environment Variables](#step-2-configure-environment-variables)
+    - [Step 3: Database & ORM Initialization](#step-3-database--orm-initialization)
+    - [Step 4: Launch the Local Server](#step-4-launch-the-local-server)
+9. [Production Deployment Guide](#%EF%B8%8F-production-deployment-guide)
+10. [Roadmap & Future Goals](#-roadmap--future-goals)
+11. [Contributing Guidelines](#-contributing-guidelines)
+12. [License](#-license)
+
+---
+
+## 🌟 Overview & Key Value Props
+
+In the modern digital landscape, finding a structured learning curriculum requires hours of manual sorting through fragmented documentation, videos, and articles. The **AI Course Generator** solves this problem by instantly synthesising personalized, end-to-end educational courses. 
+
+- **Custom-Tailored Learning**: Simply input a topic, choose a level, select a length, and watch the platform formulate a curriculum tailored to your specific parameters.
+- **Multimodal Learning Experience**: Courses integrate clear markdown explanations, actual coding blocks, and targeted YouTube videos synced automatically with the context of each chapter.
+- **Save & Share**: Secure account dashboards let users revisit their customized paths, track completion status, or share their learning URLs globally.
+
+---
+
+## 🛠️ Key Features
+
+* 🧙‍♂️ **Interactive Stepper Generation Wizard**: An easy-to-use multi-step course planner allowing users to customize target categories (e.g. Science, Programming, Health), difficulty levels (Beginner, Intermediate, Advanced), and select options to include video content.
+* 🧠 **Deterministic Outline Structuring**: Leverages structured JSON output constraints within Google Gemini models to generate predictable, highly nested, validation-safe curriculums.
+* 🎥 **Contextual Media Integration**: Intelligently queries the YouTube Data API using context-aware search strings, syncing corresponding video playlists right into the layout.
+* 💾 **Seamless Media & Asset Storage**: Integrates Supabase storage bucket workflows so users can custom upload and remove graphical course cover banners directly from the browser.
+* 🔐 **Secure Session Guards**: Implements Next.js middleware and JWT Session validations via Clerk, safeguarding database write calls and customized student panels.
+* 📱 **Modern & Accessible UX**: Styled with premium HSL-tailored dark modes, smooth hover and entrance transitions (powered by Framer Motion), and customizable dialog modules.
+
+---
+
+## ⚙️ System Architecture
+
+The following block diagram represents the relationship between the client user interface, the serverless database persistence layer, API connectors, and external microservices:
 
 ```mermaid
 graph TD
-    subgraph Client Space
-        Client["Client UI (React 18 / Tailwind / Framer Motion)"]
+    subgraph Client Space ["Client Space"]
+        UI["React 18 Client UI<br/>(Tailwind CSS / Framer Motion)"]
+        UploadComponent["Supabase Client SDK<br/>(Direct Image Uploads)"]
     end
 
-    subgraph Authentication
-        Clerk["Clerk Auth Service (JWT Session Management)"]
+    subgraph Authentication ["Authentication Layer"]
+        Clerk["Clerk Auth Service<br/>(JWT Tokens & Session Guard)"]
     end
 
-    subgraph Backend Services
-        NextServer["Next.js Server API & Route Handlers"]
+    subgraph Backend Engine ["Backend Engine"]
+        NextServer["Next.js Server API Routes<br/>(App Router Pages & Handlers)"]
     end
 
-    subgraph AI & Media Layer
-        Gemini["Google Gemini AI Engine (gemini-1.5-flash)"]
-        YouTube["YouTube Data API v3"]
+    subgraph External Interfaces ["AI & Content Services"]
+        Gemini["Google Gemini API<br/>(gemini-1.5-flash / Structured Output)"]
+        YouTube["YouTube Data API v3<br/>(Contextual Video Search)"]
     end
 
-    subgraph Data Persistence
+    subgraph Storage & Persistence ["Database & File Storage"]
         Drizzle["Drizzle ORM Engine"]
         PostgreSQL["Neon Serverless PostgreSQL DB"]
+        Supabase["Supabase Storage Buckets<br/>(ai-course bucket)"]
     end
 
     %% Interactions
-    Client -- 1. Secures Sessions --> Clerk
-    Client -- 2. Course Details / Requests --> NextServer
-    NextServer -- 3. Schema Query & Mutations --> Drizzle
-    Drizzle -- 4. Connects (TCP/HTTP) --> PostgreSQL
-    NextServer -- 5. Structured JSON Output Prompting --> Gemini
-    NextServer -- 6. Fetch Contextual Video Material --> YouTube
+    UI -. Secure Session Validation .-> Clerk
+    UI -- Request Course Creation & Details --> NextServer
+    UploadComponent -- Direct Banner Upload --> Supabase
+    NextServer -- Schema Query & Mutations --> Drizzle
+    Drizzle -- PostgreSQL TCP/HTTP Protocol --> PostgreSQL
+    NextServer -- Structured Prompting (JSON Schema) --> Gemini
+    NextServer -- Fetch Topic-Specific Video Lists --> YouTube
 ```
 
 ---
 
-## System & Data Workflow
+## 🔄 System & Data Workflow
 
-The sequence below outlines the end-to-end flow of course generation:
+The sequential steps from a user defining a course configuration to reading the compiled lesson are mapped out below:
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor User as User (Client UI)
-    participant Next as Next.js Server
-    participant Gemini as Google Gemini AI (1.5-flash)
-    participant YouTube as YouTube API Client
-    participant DB as Neon PostgreSQL (via Drizzle)
+    participant Next as Next.js API Server
+    participant Gemini as Google Gemini API
+    participant YouTube as YouTube Data API
+    participant DB as Neon PostgreSQL (Drizzle)
+    participant Supabase as Supabase Storage
 
-    User->>Next: 1. Submit course preferences (Topic, Category, Level, Chapters, Video Toggle)
-    Next->>Gemini: 2. Send prompt for course outline schema structure
-    Gemini-->>Next: 3. Return course outline JSON (Chapters, Summaries, Durations)
-    Next->>DB: 4. Insert outline record into CourseList table (UUID, creation meta)
-    Next-->>User: 5. Redirect user to Course Layout screen and show progress
-    User->>Next: 6. Trigger "Generate Course Content" expansion
-    loop For each Chapter in the Course
-        Next->>Gemini: 7. Request deep text lesson & code templates (precode blocks)
-        Gemini-->>Next: 8. Return rich structured text lesson JSON
-        alt Include Video is "Yes"
-            Next->>YouTube: 9. Search relevant educational videos (Query: Course Name + Chapter Name)
-            YouTube-->>Next: 10. Return search lists with top videoIds
+    User->>Supabase: [Optional] Upload Custom Course Banner Image
+    Supabase-->>User: Return Public CDN Asset URL
+    User->>Next: Submit course preferences (Topic, Categories, Difficulty, Custom Banner, Video Toggle)
+    Next->>Gemini: Request course outline layout based on configuration
+    Gemini-->>Next: Return structured JSON (Chapter titles, durations, goals, summaries)
+    Next->>DB: Write parent course outline config (publish=false, schema JSON)
+    Next-->>User: Complete initial outline creation; redirect to progress compiler page
+    User->>Next: Trigger lesson expansion generation API
+    loop For Each Chapter in Course Outline
+        Next->>Gemini: Request deep text lesson & code templates (precode syntax blocks)
+        Gemini-->>Next: Return structured lesson markdown contents
+        alt Include Video == 'Yes'
+            Next->>YouTube: Query matching videos (Topic Name + Chapter Title)
+            YouTube-->>Next: Return top educational Video IDs
         end
-        Next->>DB: 11. Save chapter data, content, and videoId array mapping in Chapters table
+        Next->>DB: Write chapter payload mapping to database chapters table
     end
-    Next->>DB: 12. Update CourseList.publish status to 'true'
-    Next-->>User: 13. Completion callback & redirect to interactive Course Viewer UI
+    Next->>DB: Set CourseList publish status flag to TRUE
+    Next-->>User: Redirect to Interactive Learning Portal & enable lesson navigation
 ```
 
 ---
 
-## Repository Structure
+## 📂 Repository Structure
 
-Below is an overview of the key directories and architectural entry-points:
+The code directory is structured logically to separate component libraries, API endpoints, schema definitions, and third-party configuration clients.
 
 ```
 ai-course-generator/
-├── app/                          # Next.js App Router pages and components
-│   ├── (auth)/                   # Clerk Auth routes (sign-in, sign-up pages)
-│   ├── _components/              # Shared dashboard layouts & header blocks
-│   ├── _context/                 # UserInputContext for state sharing across stepper wizard
-│   ├── _shared/                  # Common utilities & formatting helper scripts
+├── app/                          # Next.js App Router (Entrypoint)
+│   ├── (auth)/                   # Authentication pages (Sign-in, Sign-up) managed via Clerk
+│   ├── _components/              # Shared high-level layouts, navigation headers, and footer components
+│   ├── _context/                 # UserInputContext for state management throughout wizard stages
+│   ├── _shared/                  # Utilities, constant schemas, and formatting helpers
 │   ├── course/
-│   │   └── [courseId]/           # Interactive course reader layouts & student viewing portal
-│   ├── create-course/
-│   │   ├── _components/          # Wizard options, topic selector & loading dialogs
+│   │   └── [courseId]/           # Dynamic learning portal rendering structured chapters and videos
+│   ├── create-course/            # Multistep wizard orchestrator
+│   │   ├── _components/          # Wizard form sheets, topic options, and loading modals
 │   │   ├── [courseId]/
-│   │   │   ├── finish/           # Success screen displaying URL paths and share options
-│   │   │   └── page.jsx          # Chapter content compiler & YouTube sync orchestrator
-│   │   └── page.jsx              # Main stepper creation page
-│   ├── dashboard/                # Main dashboard listing active courses and explore metrics
-│   ├── globals.css               # Design tokens, custom animations and global theme setup
-│   ├── layout.js                 # App wrapper importing Providers (Clerk, Context, UI Toast)
-│   └── page.js                   # High-conversion Landing Page highlighting value prop
-├── components/                   # Radix UI components (Shadcn primitives)
-├── configs/                      # Service connectors and database config
-│   ├── aiModel.js                # Gemini Generative AI configuration & instruction context
-│   ├── db.js                     # Neon Serverless PostgreSQL instance connection via Drizzle ORM
-│   ├── schema.js                 # Database schemas & relationships (Drizzle declarative setup)
-│   └── youtubeService.js         # YouTube Data Search client module
-├── hooks/                        # Custom React hook utilities (e.g. use-toast.js)
-├── drizzle.config.js             # Drizzle kit setup file containing migrations configuration
-└── package.json                  # Dependencies manifest file
+│   │   │   ├── finish/           # Success dashboard showing course details and public share links
+│   │   │   └── page.jsx          # Chapter compiler logic interfacing with backend and APIs
+│   │   └── page.jsx              # Creation entry wizard managing step transitions
+│   ├── dashboard/                # Main student dashboard listing active courses and metrics
+│   ├── globals.css               # Main styling manifest containing custom keyframes, scrollbars, and design variables
+│   ├── layout.js                 # Global HTML shell injection and Provider wrappers
+│   └── page.js                   # Public landing page showcasing application value proposition
+├── components/                   # Shadcn components (Radix primitives styled with Tailwind)
+│   └── ui/                       # Reusable custom inputs, dialogs, progress bars, and buttons
+├── configs/                      # Service initialization clients & database configurations
+│   ├── aiModel.js                # Google Gemini generative-ai engine schema client and settings
+│   ├── db.js                     # Neon serverless database client mapping
+│   ├── schema.js                 # PostgreSQL relational table definitions (Drizzle ORM declarative schemas)
+│   └── youtubeService.js         # YouTube data retrieval service layer
+├── hooks/                        # Custom React hook logic (toast banners, triggers)
+├── lib/                          # Third-party instance initializations
+│   └── supabaseClient.js         # Supabase client mapping for storage bucket uploads
+├── public/                       # Static public assets (placeholder banners, logos, icons)
+├── drizzle.config.js             # Drizzle Kit CLI migrations and database parameters setup
+├── next.config.mjs               # Next.js configurations allowing Supabase domains and assets caching
+├── tailwind.config.js            # Tailwind custom extensions, theme rules, and responsive presets
+└── package.json                  # Main node dependency manifest and build targets
 ```
 
 ---
 
-## Detailed Tech Stack & Architecture Rationale
+## 💻 Tech Stack & Architecture Rationale
 
-A curated stack designed for high performance, ease of use, type safety, and maximum development velocity.
+The architecture was chosen to emphasize performance, serverless scaling, clean relational querying, and rapid development speed.
 
-| Technology | Role | Technical Rationale & Design Decisions |
+| Technology | Role | Rationale & Design Choice |
 | :--- | :--- | :--- |
-| **Next.js 14 (App Router)** | Framework | Utilizing React Server Components (RSC) to minimize client-side bundle sizes and boost SEO metrics. Dynamic route caching and layout states optimize performance. |
-| **Google Gemini 1.5 Flash** | AI Engine | Leverage `gemini-1.5-flash`'s long context window and rapid inference speed. Prompts are fine-tuned with structured response configuration constraints, ensuring robust JSON parsing and predictable data integration. |
-| **Drizzle ORM** | Database Mapper | A lightweight, type-safe TypeScript/JS query builder. Unlike heavy traditional ORMs, Drizzle translates directly to clean SQL queries, preserving query speed while supporting declarative database migrations. |
-| **Neon PostgreSQL (Serverless)** | Database Engine | Offers serverless scaling with connection-pooling, ensuring database response times remain stable even under high-traffic spikes, with automatic scaling to zero to minimize maintenance costs. |
-| **Clerk Authentication** | Security & User Management | Secure JWT validation middleware safeguarding server-side data fetches. Pre-built auth widgets reduce time-to-market while keeping user records protected. |
-| **Tailwind CSS & Framer Motion** | Styling & Animation | Custom-themed utility styles alongside fluid micro-interactions. Framer Motion builds dynamic user interest during loading screens and wizard state transitions. |
-| **Radix UI & Tabler Icons** | UI Primitives | Accessible, customizable headless components (dialogs, drop-downs, progress bars) styled dynamically via Tailwind CSS. |
+| **Next.js 14 (App Router)** | Framework | Employs React Server Components (RSC) to reduce client javascript bundles, improving initial load speeds and SEO. Utilizes Next.js App Router API directory routes for server operations. |
+| **Google Gemini 1.5 Flash** | AI Engine | Excellent response speed, extremely large context window, and native JSON output constraints that make structured parsing predictable and error-free. |
+| **Drizzle ORM** | Data Mapping | A type-safe, developer-friendly SQL query builder. It operates with zero overhead compared to traditional heavy ORMs, translating commands directly to pure SQL. |
+| **Neon PostgreSQL** | Database Server | High-performance, serverless database engine featuring automatic connection pooling, scale-to-zero capability to minimize infrastructure costs, and instant branch cloning. |
+| **Clerk Auth** | Authentication | Pre-built web login components and server-side middleware checking. Offloads user management, security encryption, and session JWT handling cleanly. |
+| **Supabase Storage** | CDN & Media Storage | Handles user-facing graphic and custom course cover uploads seamlessly via a developer-focused Client SDK, supporting rapid image deletions and generation. |
+| **Tailwind CSS & Framer Motion** | UI & Styling | Combines high-velocity utility styling with smooth micro-interactions. Framer Motion builds dynamic layouts that keep users engaged during compilation sequences. |
 
 ---
 
-## Database Schema Design
+## 💾 Database & Storage Design
 
-Declaratively defined inside `configs/schema.js` using Drizzle:
+### 1. Database Schema (Neon PostgreSQL via Drizzle ORM)
 
-### 1. `CourseList` Table (Main Course Record)
-Stores primary course layouts and state flags:
-- `id` (serial primaryKey)
-- `courseId` (varchar, unique generated UUID)
-- `name` (varchar, the topic of the course)
-- `category` (varchar, e.g., Tech, Business, Arts)
-- `level` (varchar, Beginner, Intermediate, Advanced)
-- `includeVideo` (varchar, defaults to "Yes")
-- `courseOutput` (json, raw structured outline generated by Gemini AI containing outline details)
-- `createdBy` (varchar, matching the authenticated user's email address)
-- `userName` (varchar, displayName)
-- `userProfileImage` (varchar, profile photo)
-- `courseBanner` (varchar, custom default card banner path)
-- `publish` (boolean, tracking if chapter content generation succeeded)
+Located in [configs/schema.js](file:///c:/Users/vrind/OneDrive/Desktop/ai-course-generator/configs/schema.js), the tables use a relational layout optimized for quick reads and structured updates.
 
-### 2. `Chapters` Table (Expanded Lesson Content)
-Holds deep educational materials for individual course items:
-- `id` (serial primaryKey)
-- `courseId` (varchar, linking back to the matching parent `CourseList.courseId`)
-- `chapterId` (varchar, order sequence indicator of the chapter)
-- `content` (json, structured array containing lesson titles, detailed reading text, and code syntax snippets in `<precode>` tags)
-- `videoId` (json, list of matched YouTube video IDs synced during compilation)
+#### 📁 `CourseList` Table (Parent Outlines)
+Stores primary configurations, cover links, settings, and full outlines generated by the AI:
+```javascript
+export const CourseList = pgTable("courseList", {
+  id: serial("id").primaryKey(),                 // Auto-increment primary index
+  courseId: varchar("courseId").notNull(),       // Unique UUID representing the course instance
+  name: varchar("name").notNull(),               // Title of the user course topic
+  category: varchar("category").notNull(),       // Subject Category (Tech, Business, etc.)
+  level: varchar("level").notNull(),             // User target difficulty (Beginner, Intermediate, Advanced)
+  includeVideo: varchar("includeVideo").notNull().default("Yes"), // Include youtube videos toggle
+  courseOutput: json("courseOutput").notNull(),   // Full curriculum schema generated by Gemini
+  createdBy: varchar("createdBy").notNull(),     // Owner user email parsed from Clerk authentication
+  userName: varchar("username"),                 // Owner displayName
+  userProfileImage: varchar("userProfileImage"), // Owner avatar CDN source
+  courseBanner: varchar("courseBanner").default("/placeholder.png"), // Selected or custom uploaded banner url
+  publish: boolean("publish").default(false),    // Setup status (marked TRUE when all chapters compile)
+})
+```
+
+#### 📖 `Chapters` Table (Lesson Content)
+Holds deep chapter text materials, step descriptions, and synchronized video lists:
+```javascript
+export const Chapters = pgTable("chapters", {
+  id: serial("id").primaryKey(),                 // Auto-increment primary index
+  courseId: varchar("courseId").notNull(),       // Links back to the parent CourseList.courseId
+  chapterId: varchar("chapterId").notNull(),     // Ordinal string representing chapter index (e.g. "0", "1")
+  content: json("content").notNull(),            // Deep text explanations, takeaways, and code syntax models
+  videoId: json("videoId").notNull().$default("[]"), // Array of top matching YouTube Video IDs
+});
+```
 
 ---
 
-## Getting Started
+### 2. Storage Configuration (Supabase Storage)
+
+The application features custom banner uploads. Images uploaded by users are saved in the `ai-course` bucket inside Supabase storage. 
+* Managed in [lib/supabaseClient.js](file:///c:/Users/vrind/OneDrive/Desktop/ai-course-generator/lib/supabaseClient.js).
+* Configurations in [next.config.mjs](file:///c:/Users/vrind/OneDrive/Desktop/ai-course-generator/next.config.mjs) allow Next.js `<Image />` tags to render dynamic assets from Supabase CDN hosts.
+
+---
+
+## 🚀 Getting Started & Local Setup
+
+Follow these structured instructions to configure, initialize, and run a local instance of the AI Course Generator.
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
+* [Node.js](https://nodejs.org/) (Version 18.0.0 or higher is required)
+* A [Neon PostgreSQL](https://neon.tech/) database instance
+* A [Clerk](https://clerk.com/) account for managing project credentials
+* A [Google Gemini API Key](https://ai.google.dev/)
+* A [YouTube Data API v3 Key](https://developers.google.com/youtube/v3/getting-started) via Google Cloud Console
+* A [Supabase](https://supabase.com/) project bucket named `ai-course`
 
-### 1. Clone & Install Dependencies
+---
+
+### Step 1: Clone Repository & Install Dependencies
+First, open your terminal and download the repository files:
 ```bash
-git clone https://github.com/yourusername/ai-course-generator.git
+git clone https://github.com/your-username/ai-course-generator.git
 cd ai-course-generator
 npm install
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file at the root level of your directory and insert your keys:
+---
+
+### Step 2: Configure Environment Variables
+Create a file named `.env` in the root workspace directory:
 ```env
+# Clerk Authentication Configuration Keys
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
 
-NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key
+# Google Gemini AI Endpoint Configuration
+NEXT_PUBLIC_GEMINI_API_KEY=your_google_gemini_api_key
+
+# YouTube API Endpoint (Data API v3)
 NEXT_PUBLIC_YOUTUBE_API_KEY=your_youtube_api_key
 
-# Neon PostgreSQL connection string
-NEXT_PUBLIC_DB_CONNECTION_STRING=postgres://username:password@hostname/database
+# PostgreSQL Connection String (Neon Console)
+NEXT_PUBLIC_DB_CONNECTION_STRING=postgresql://username:password@hostname/database?sslmode=require
+
+# Supabase Storage Integration Configurations
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_public_key
+
+# Hosting Context Parameters
+NEXT_PUBLIC_HOST_NAME=http://localhost:3000
 ```
 
-### 3. Push Database Schema
-Instantly push the Drizzle schema details to Neon PostgreSQL:
+---
+
+### Step 3: Database & ORM Initialization
+Map out and synchronize database tables directly to your Neon serverless instances:
+
 ```bash
+# Push schemas to Neon PostgreSQL
 npm run db:push
 ```
-*Note: To run Drizzle's visual database manager workspace, run `npm run db:studio`.*
 
-### 4. Run Development Server
+To review, edit, or modify database entries visually in a web UI:
+```bash
+# Open Drizzle ORM visual Studio
+npm run db:studio
+```
+
+---
+
+### Step 4: Launch the Local Server
+Boot up the Next.js development server:
 ```bash
 npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000) in your web browser. You can now build, test, and render customized learning paths locally.
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the active application.
+---
+
+## 🛠️ Production Deployment Guide
+
+This app is optimized for serverless hosting providers like **Vercel** or **Netlify**.
+
+1. **Deploy Repository**: Link your GitHub repository to a new project in your Vercel Dashboard.
+2. **Environment Variables**: Add all environment variables listed in `.env` inside Vercel's Project Settings panel.
+3. **Database Migration**: Ensure `npm run db:push` has run to prepare the production database.
+4. **Deploy & Build**: Vercel will trigger the production build pipeline (`npm run build`) automatically.
+5. **Update Clerk URLs**: Ensure you configure your production domain values in the Clerk Dashboard redirects list.
+
+---
+
+## 🗺️ Roadmap & Future Goals
+
+- [ ] **Interactive Quizzes**: Generate contextual multiple-choice assessments at the end of each chapter using Google Gemini.
+- [ ] **Export to PDF & Markdown**: Download full curricula and study notes locally for offline reading.
+- [ ] **Interactive Code Sandboxes**: Embed running Javascript/HTML testbeds within lesson windows for immediate hands-on practice.
+- [ ] **Dynamic Progress Tracking**: Track reader scroll checkpoints and save chapter completion milestones.
+
+---
+
+## 🤝 Contributing Guidelines
+
+Contributions are welcome! If you want to contribute, please follow these guidelines:
+
+1. **Fork the Repository** on GitHub.
+2. **Create a Feature Branch**: `git checkout -b feature/amazing-feature`.
+3. **Commit Changes**: Use clear, descriptive commit messages.
+4. **Push Changes**: `git push origin feature/amazing-feature`.
+5. **Open a Pull Request** to the `main` branch, outlining your improvements.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` file for more details.
+
+---
+
+<p align="center">Made with ❤️ by the AI Course Generator Team</p>
