@@ -504,9 +504,9 @@ function FooterSection() {
           &copy; {currentYear} Prisma. All rights reserved. Built for visionary learners.
         </div>
         <div className="flex gap-6">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">GitHub</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">Twitter</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">LinkedIn</a>
+          <a href="https://github.com/vrindabindal12" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">GitHub</a>
+          <a href="mailto:vrindabindal1212@gmail.com" className="hover:text-[#E1E0CC] transition-colors duration-200">Email</a>
+          <a href="https://www.linkedin.com/in/vrinda-bindal-55b645349/" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">LinkedIn</a>
         </div>
       </div>
     </footer>
