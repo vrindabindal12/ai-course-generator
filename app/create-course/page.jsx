@@ -123,44 +123,79 @@ const CreateCourse = () => {
 
  
   return (
-    <div>
-
-        <div className='flex flex-col justify-center items-center mt-10'>
-          <h2 className='text-primary text-4xl font-medium'>Create Course</h2>
-          <div className='flex mt-10'>
-            {StepperOptions.map((item,index)=>(
-              <div className='flex items-center'>
-                <div className='flex flex-col items-center w-[50px] md:w-[100px]'>
-                  <div className={`bg-gray-200 rounded-full p-3 text-white ${activeIndex>=index && "bg-purple-500"}`}>
-                     {item.icon}
+    <div className="py-6 px-4 sm:px-10 max-w-4xl mx-auto min-h-[calc(100vh-60px)] flex flex-col justify-between">
+      <div>
+        <div className='flex flex-col justify-center items-center mt-4'>
+          <h2 className='text-[#E1E0CC] text-2xl md:text-3xl font-medium tracking-tight text-center'>
+            Create <span className="font-serif italic text-primary font-normal">AI Course</span>
+          </h2>
+          
+          {/* Stepper Grid */}
+          <div className='flex items-center justify-center mt-6 gap-2'>
+            {StepperOptions.map((item, index) => (
+              <div key={item.id} className='flex items-center'>
+                <div className='flex flex-col items-center w-[60px] md:w-[100px]'>
+                  <div className={`rounded-full p-2.5 transition-all duration-300 flex items-center justify-center w-9 h-9 md:w-11 md:h-11 border text-sm md:text-base ${
+                    activeIndex >= index 
+                      ? "bg-primary text-black border-primary shadow-lg shadow-primary/15 font-semibold" 
+                      : "bg-neutral-900 text-neutral-500 border-neutral-850"
+                  }`}>
+                    {item.icon}
                   </div>
-                  <h2 className='hidden md:block md:text-sm'>{item.title}</h2>
+                  <h2 className={`hidden md:block text-xs mt-1.5 font-medium transition-colors ${
+                    activeIndex >= index ? "text-[#E1E0CC]" : "text-neutral-500"
+                  }`}>{item.title}</h2>
                 </div>
-                {index!= StepperOptions.length-1 && 
-                <div className={`h-1 w-[50px] md:w-[100px] lg:w-[170px] bg-gray-300 rounded-full ${activeIndex>=index+1 && "bg-purple-500"}`}>
-                </div>
-                }
+                {index !== StepperOptions.length - 1 && (
+                  <div className={`h-[1px] w-[35px] md:w-[80px] lg:w-[120px] transition-all duration-300 ${
+                    activeIndex >= index + 1 ? "bg-primary" : "bg-neutral-850"
+                  }`} />
+                )}
               </div>
             ))}
           </div>
         </div>
-        <div className='px-10 md:px-20 lg:px-44 mt-10'>
 
-          {activeIndex==0?<SelectCategory />:null}
-          {activeIndex==1?<TopicAndDesc />:null}
-          {activeIndex==2?<Options />:null}
-
-       
-
-        <div className='flex justify-between mt-10'>
-          <Button disabled={activeIndex == 0} onClick={() => setActiveIndex(activeIndex - 1)} className="hover:bg-primary hover:text-primary-foreground"
-          variant="outline"
-            >Previous</Button>
-          {activeIndex<2 && <Button disabled={checkStatus()} onClick={() => setActiveIndex(activeIndex + 1)}>Next</Button>}
-          {activeIndex==2 && <Button  disabled={checkStatus()} onClick={() => GenerateCourseLayout()}>Gnerate Course Layout</Button>}
+        {/* Form Components wrapper */}
+        <div className='mt-8 bg-[#111111]/40 border border-neutral-900 rounded-2xl p-4 md:p-8 shadow-sm backdrop-blur-sm relative overflow-hidden'>
+          <div className="absolute inset-0 noise-overlay opacity-[0.02] pointer-events-none" />
+          <div className="relative z-10">
+            {activeIndex === 0 ? <SelectCategory /> : null}
+            {activeIndex === 1 ? <TopicAndDesc /> : null}
+            {activeIndex === 2 ? <Options /> : null}
+          </div>
         </div>
-       </div>
-        <LoadingDialog loading={loading} />
+      </div>
+
+      {/* Stepper Navigation Buttons */}
+      <div className='flex justify-between items-center mt-8 pt-4 border-t border-neutral-900/60'>
+        <button 
+          disabled={activeIndex === 0} 
+          onClick={() => setActiveIndex(activeIndex - 1)} 
+          className="px-6 py-2.5 border border-neutral-800 rounded-full text-xs font-semibold text-gray-400 hover:text-white hover:border-neutral-700 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer active:scale-95"
+        >
+          Previous
+        </button>
+        {activeIndex < 2 && (
+          <button 
+            disabled={checkStatus()} 
+            onClick={() => setActiveIndex(activeIndex + 1)}
+            className="bg-primary text-black hover:bg-[#c9c6b3] font-semibold text-xs rounded-full px-8 py-2.5 disabled:opacity-35 disabled:pointer-events-none transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+          >
+            Next
+          </button>
+        )}
+        {activeIndex === 2 && (
+          <button  
+            disabled={checkStatus()} 
+            onClick={() => GenerateCourseLayout()}
+            className="bg-primary text-black hover:bg-[#c9c6b3] font-semibold text-xs rounded-full px-8 py-2.5 disabled:opacity-35 disabled:pointer-events-none transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+          >
+            Generate Course Layout
+          </button>
+        )}
+      </div>
+      <LoadingDialog loading={loading} />
     </div>
   )
 }

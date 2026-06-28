@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function SpotlightCard({ children, className = "", variants, href }) {
+export default function SpotlightCard({ children, className = "", variants, href, ...props }) {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e) => {
@@ -24,6 +24,7 @@ export default function SpotlightCard({ children, className = "", variants, href
         variants={variants}
         onMouseMove={handleMouseMove}
         className={`relative overflow-hidden group transition-all duration-300 border border-neutral-800/80 ${className}`}
+        {...props}
       >
         {/* Background radial spotlight glow */}
         <div
@@ -42,6 +43,7 @@ export default function SpotlightCard({ children, className = "", variants, href
       variants={variants}
       onMouseMove={handleMouseMove}
       className={`relative overflow-hidden group transition-all duration-300 border border-neutral-800/80 ${className}`}
+      {...props}
     >
       {/* Background radial spotlight glow */}
       <div
