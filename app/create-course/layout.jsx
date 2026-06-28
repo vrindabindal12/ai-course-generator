@@ -6,7 +6,12 @@ import { UserButton } from "@clerk/nextjs";
 import { UserInputContext } from "../_context/UserInputContext";
 
 function CreateCourseLayout({ children }) {
-  const [userCourseInput, setUserCourseInput] = useState([]);
+  const [userCourseInput, setUserCourseInput] = useState({
+    level: "Beginner",
+    duration: "2 Hours",
+    displayVideo: "No",
+    noOfChapters: 5,
+  });
   return (
     <div className="bg-black min-h-screen text-[#E1E0CC]">
       <UserInputContext.Provider
