@@ -11,6 +11,7 @@ import {
 } from "./_components/PrismaComponents";
 import PricingSection from "./_components/PricingSection";
 import TestimonialsSection from "./_components/TestimonialsSection";
+import { useToast } from "@/hooks/use-toast";
 
 const navItems = [
   { name: "Workflow", href: "#how-it-works" },
@@ -21,19 +22,19 @@ const navItems = [
   { name: "Dashboard", href: "/dashboard" }
 ];
 
+const handleSmoothScroll = (e, href) => {
+  if (href.startsWith("#")) {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      elem.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
 function Navbar() {
   const [hoveredIdx, setHoveredIdx] = useState(null);
-
-  const handleScroll = (e, href) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      const targetId = href.replace("#", "");
-      const elem = document.getElementById(targetId);
-      if (elem) {
-        elem.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
 
   return (
     <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-auto">
@@ -42,7 +43,7 @@ function Navbar() {
           <a
             key={idx}
             href={item.href}
-            onClick={(e) => handleScroll(e, item.href)}
+            onClick={(e) => handleSmoothScroll(e, item.href)}
             style={{
               color: hoveredIdx === idx ? "#E1E0CC" : "rgba(225, 224, 204, 0.8)",
             }}
@@ -444,6 +445,20 @@ function HowItWorksSection() {
 
 function FooterSection() {
   const currentYear = new Date().getFullYear();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    toast({
+      title: "Added",
+      description: "You have been successfully added to our newsletter!",
+    });
+    setEmail("");
+  };
+
   return (
     <footer className="bg-black text-[#E1E0CC]/70 py-16 px-4 md:px-8 border-t border-neutral-900">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-12">
@@ -460,11 +475,11 @@ function FooterSection() {
         {/* Links col 1 */}
         <div className="md:col-span-2 flex flex-col gap-3">
           <h4 className="text-xs uppercase tracking-widest font-semibold text-[#E1E0CC] mb-1">Platform</h4>
-          <a href="#how-it-works" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">How It Works</a>
-          <a href="#features" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Features</a>
-          <a href="#benefits" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Benefits</a>
-          <a href="#testimonials" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Testimonials</a>
-          <a href="#pricing" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Pricing</a>
+          <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, "#how-it-works")} className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">How It Works</a>
+          <a href="#features" onClick={(e) => handleSmoothScroll(e, "#features")} className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Features</a>
+          <a href="#benefits" onClick={(e) => handleSmoothScroll(e, "#benefits")} className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Benefits</a>
+          <a href="#testimonials" onClick={(e) => handleSmoothScroll(e, "#testimonials")} className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Testimonials</a>
+          <a href="#pricing" onClick={(e) => handleSmoothScroll(e, "#pricing")} className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Pricing</a>
           <a href="/dashboard" className="text-sm hover:text-[#E1E0CC] transition-colors duration-200">Dashboard</a>
         </div>
 
@@ -482,10 +497,13 @@ function FooterSection() {
           <p className="text-xs text-[#E1E0CC]/50 leading-relaxed mb-1">
             Subscribe to get the latest updates on AI-curated learning.
           </p>
-          <form className="flex gap-2 max-w-[280px]" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex gap-2 max-w-[280px]" onSubmit={handleSubmit}>
             <input
               type="email"
               placeholder="Your email address"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="bg-neutral-900/60 border border-neutral-800 rounded-lg px-3.5 py-2 text-xs text-[#E1E0CC] placeholder-neutral-600 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-primary/20 w-full transition-all duration-200"
             />
             <button
