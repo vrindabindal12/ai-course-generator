@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, X } from "lucide-react";
 import {
   WordsPullUp,
   WordsPullUpMultiStyle,
@@ -447,6 +447,7 @@ function FooterSection() {
   const currentYear = new Date().getFullYear();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
+  const [modalType, setModalType] = useState(null); // null, 'privacy', 'terms', 'inquiries'
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -457,6 +458,70 @@ function FooterSection() {
       description: "You have been successfully added to our newsletter!",
     });
     setEmail("");
+  };
+
+  const modalContent = {
+    privacy: {
+      title: "Privacy Policy",
+      content: (
+        <>
+          <p>Effective Date: June 28, 2026</p>
+          <p>
+            At Prisma, we take your privacy seriously. This Privacy Policy outlines how we collect, use, disclose, and safeguard your personal information when you use our AI course generator.
+          </p>
+          <p>
+            <strong>Information We Collect:</strong> We collect details such as your name, email address (via secure Clerk authentication), and learning preferences to customize your course generation experience. We do not sell or lease your data to third parties.
+          </p>
+          <p>
+            <strong>Usage & Video Sync:</strong> Course outline queries are processed via Gemini AI to generate custom curriculum paths, and video sync options query public APIs (like YouTube) without sharing your personal account credentials.
+          </p>
+          <p>
+            If you have any questions or concerns about this policy, please contact us at vrindabindal1212@gmail.com.
+          </p>
+        </>
+      ),
+    },
+    terms: {
+      title: "Terms of Use",
+      content: (
+        <>
+          <p>Effective Date: June 28, 2026</p>
+          <p>
+            Welcome to Prisma. By accessing or using our platform, you agree to comply with and be bound by the following Terms of Use.
+          </p>
+          <p>
+            <strong>Account Responsibility:</strong> You are responsible for keeping your Clerk authentication details secure. You must not use the platform for any illegal actions or automated scraping of generated materials.
+          </p>
+          <p>
+            <strong>AI Outputs:</strong> Course contents and lesson materials are generated dynamically using Generative AI. While we optimize for accuracy, outlines should be used for supplementary educational purposes.
+          </p>
+          <p>
+            <strong>Service Limits:</strong> We reserve the right to limit course generations, modify pricing tiers, or suspend access for users who violate standard rate-limits or system usage guidelines.
+          </p>
+        </>
+      ),
+    },
+    inquiries: {
+      title: "Inquiries",
+      content: (
+        <>
+          <p>
+            Thank you for your interest in Prisma. We welcome inquiries from developers, educators, researchers, and creators.
+          </p>
+          <p>
+            <strong>Contact Info:</strong>
+            <br />
+            For business development, corporate training partnerships, academic collaborations, or feedback, please drop us an email at:
+          </p>
+          <p className="bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-center text-[#E1E0CC] font-mono select-all">
+            vrindabindal1212@gmail.com
+          </p>
+          <p>
+            We typically respond within 24–48 hours. Let's build the future of adaptive education together.
+          </p>
+        </>
+      ),
+    },
   };
 
   return (
@@ -486,9 +551,9 @@ function FooterSection() {
         {/* Links col 3 */}
         <div className="md:col-span-2 flex flex-col gap-3">
           <h4 className="text-xs uppercase tracking-widest font-semibold text-[#E1E0CC] mb-1">Legal</h4>
-          <span className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Privacy Policy</span>
-          <span className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Terms of Use</span>
-          <span className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Inquiries</span>
+          <span onClick={() => setModalType("privacy")} className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Privacy Policy</span>
+          <span onClick={() => setModalType("terms")} className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Terms of Use</span>
+          <span onClick={() => setModalType("inquiries")} className="text-sm cursor-pointer hover:text-[#E1E0CC] transition-colors duration-200">Inquiries</span>
         </div>
 
         {/* Newsletter col */}
@@ -527,6 +592,35 @@ function FooterSection() {
           <a href="https://www.linkedin.com/in/vrinda-bindal-55b645349/" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1E0CC] transition-colors duration-200">LinkedIn</a>
         </div>
       </div>
+
+      {/* Modal Dialog */}
+      {modalType && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#101010] border border-neutral-800 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl animate-in fade-in zoom-in-95 duration-200 text-[#E1E0CC]">
+            <button
+              onClick={() => setModalType(null)}
+              className="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-semibold text-[#E1E0CC] mb-4">
+              {modalContent[modalType].title}
+            </h3>
+            <div className="max-h-[50vh] overflow-y-auto pr-2 mt-4 text-xs sm:text-sm text-neutral-400 leading-relaxed space-y-4">
+              {modalContent[modalType].content}
+            </div>
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setModalType(null)}
+                className="bg-primary text-black rounded-lg px-4 py-2 text-xs font-semibold hover:bg-primary/90 transition-all cursor-pointer active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }
