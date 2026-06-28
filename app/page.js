@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Check, X, LayoutDashboard } from "lucide-react";
+import { ArrowRight, Check, X, LayoutDashboard, Sparkles, Video, Share2 } from "lucide-react";
 import {
   WordsPullUp,
   WordsPullUpMultiStyle,
@@ -275,12 +275,12 @@ function FeaturesSection() {
         variants={containerVariants}
         initial="hidden"
         animate={isGridInView ? "visible" : "hidden"}
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:h-[480px] gap-3 sm:gap-2 md:gap-1"
+        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:h-[380px] gap-6"
       >
         {/* Card 1 - Interactive course dashboard */}
         <SpotlightCard
           variants={cardVariants}
-          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[350px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
+          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[310px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
         >
           <div className="flex flex-col gap-4 relative z-20">
             <div className="flex justify-between items-start">
@@ -318,15 +318,13 @@ function FeaturesSection() {
         {/* Card 2 - AI Course Builder */}
         <SpotlightCard
           variants={cardVariants}
-          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[350px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
+          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[310px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
         >
           <div className="flex flex-col gap-4 relative z-20">
             <div className="flex justify-between items-start">
-              <img
-                src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85"
-                alt="AI Course Builder Icon"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded object-cover"
-              />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-neutral-800 rounded flex items-center justify-center text-primary">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
               <span className="text-gray-500 font-mono text-sm">02</span>
             </div>
             <h3 className="text-lg font-medium text-[#E1E0CC] mt-2">AI Course Builder.</h3>
@@ -358,15 +356,13 @@ function FeaturesSection() {
         {/* Card 3 - Video Sync */}
         <SpotlightCard
           variants={cardVariants}
-          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[350px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
+          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[310px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
         >
           <div className="flex flex-col gap-4 relative z-20">
             <div className="flex justify-between items-start">
-              <img
-                src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85"
-                alt="Video Sync Icon"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded object-cover"
-              />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-neutral-800 rounded flex items-center justify-center text-primary">
+                <Video className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
               <span className="text-gray-500 font-mono text-sm">03</span>
             </div>
             <h3 className="text-lg font-medium text-[#E1E0CC] mt-2">Video Sync.</h3>
@@ -398,15 +394,13 @@ function FeaturesSection() {
         {/* Card 4 - Secure Dashboard */}
         <SpotlightCard
           variants={cardVariants}
-          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[350px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
+          className="bg-[#212121] rounded-2xl p-6 flex flex-col justify-between h-[310px] lg:h-full group hover:bg-[#252525] transition-all duration-300 border border-neutral-800 hover:border-primary/30"
         >
           <div className="flex flex-col gap-4 relative z-20">
             <div className="flex justify-between items-start">
-              <img
-                src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85"
-                alt="Secure Dashboard Icon"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded object-cover"
-              />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-neutral-800 rounded flex items-center justify-center text-primary">
+                <Share2 className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
               <span className="text-gray-500 font-mono text-sm">04</span>
             </div>
             <h3 className="text-lg font-medium text-[#E1E0CC] mt-2">Manage & Share.</h3>
