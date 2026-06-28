@@ -24,6 +24,17 @@ const navItems = [
 function Navbar() {
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
+  const handleScroll = (e, href) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.replace("#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-auto">
       <div className="bg-black/90 backdrop-blur-md rounded-b-2xl md:rounded-b-3xl px-4 py-2 md:px-8 flex items-center justify-center gap-3 sm:gap-6 md:gap-12 lg:gap-14 shadow-lg shadow-black/50">
@@ -31,6 +42,7 @@ function Navbar() {
           <a
             key={idx}
             href={item.href}
+            onClick={(e) => handleScroll(e, item.href)}
             style={{
               color: hoveredIdx === idx ? "#E1E0CC" : "rgba(225, 224, 204, 0.8)",
             }}
