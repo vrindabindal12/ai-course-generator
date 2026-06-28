@@ -5,9 +5,7 @@ import React from 'react'
 import { UserCourseListContext } from "@/app/_context/UserCourseListContext";
 import { useContext,useEffect } from 'react';
 import { MdOutlineExplore } from "react-icons/md";
-import { GoShieldCheck } from "react-icons/go";
 import { TbLogout } from "react-icons/tb";
-import { Progress } from "@/components/ui/progress"
 import Link from 'next/link';
 import {HiOutlineHome,} from "react-icons/hi2";
 
@@ -32,12 +30,6 @@ const Sidebar = () => {
             name: 'Explore',
             icon : <MdOutlineExplore />,
             link: '/dashboard/explore',
-        },
-        {
-            id : 1,
-            name: 'Upgrade',
-            icon : <GoShieldCheck />,
-            link: '/dashboard/upgrade',
         },
         {
             id : 1,
@@ -71,18 +63,7 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      <div className='w-full mb-5'>
-        <Progress value={(userCourseList?.length / 5) * 100} className="h-1.5 bg-neutral-800 [&>div]:bg-[#DEDBC8]" />
-
-        <h2 className="text-xs my-2 text-gray-400">
-          {userCourseList?.length} Out of 5 Course Created
-        </h2>
-        <Link href="/dashboard/upgrade">
-          <h2 className="text-[10px] hover:underline text-gray-500 hover:text-[#E1E0CC] transition-colors duration-200 leading-relaxed">
-            Upgrade your plan for unlimited course generation
-          </h2>
-        </Link>
-      </div>
+      <div className='w-full mb-5' />
     </div>
   )
 }

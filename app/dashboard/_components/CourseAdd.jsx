@@ -20,9 +20,7 @@ const CourseAdd = () => {
             Transform any topic into a custom-tailored course path instantly. Define learning goals, generate chapter layouts, and sync contextual YouTube lessons in seconds.
           </p>
       </div>
-      <Link href={
-            userCourseList?.length >= 5 ? "/dashboard/upgrade" : "/create-course"
-          } className="relative z-10 shrink-0">
+      <Link href="/create-course" className="relative z-10 shrink-0">
        <button className="bg-[#DEDBC8] hover:bg-[#E1E0CC] text-black font-semibold text-xs sm:text-sm rounded-full px-6 py-3 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md flex items-center justify-center">
          + Create AI Course
        </button>
