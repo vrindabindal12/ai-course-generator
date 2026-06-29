@@ -65,14 +65,19 @@ In the modern digital landscape, finding a structured learning curriculum requir
 
 ---
 
-## Key Features
+### Key Features
 
 * **Interactive Stepper Generation Wizard**: An easy-to-use multi-step course planner allowing users to customize target categories (e.g. Science, Programming, Health), difficulty levels (Beginner, Intermediate, Advanced), and select options to include video content.
 * **Deterministic Outline Structuring**: Leverages structured JSON output constraints within Google Gemini models to generate predictable, highly nested, validation-safe curriculums.
 * **Contextual Media Integration**: Intelligently queries the YouTube Data API using context-aware search strings, syncing corresponding video playlists right into the layout.
+* **Interactive Study Portal (`/course/[courseId]/start`)**: A sidebar-driven workspace allowing students to read detailed markdown lessons, view code/text formats, and watch synchronized video lectures side-by-side.
 * **Seamless Media & Asset Storage**: Integrates Supabase storage bucket workflows so users can custom upload and remove graphical course cover banners directly from the browser.
+* **Course Management Actions**: Contextual dropdown menus on course cards supporting editing, deleting from Neon database records, and launching the sharing portal.
+* **Programmatic Social Sharing**: A dedicated dialog containing programmatic clipboard copying (backed by visual toast messages) and quick sharing shortcuts to Twitter, LinkedIn, and WhatsApp.
+* **Dynamic Cursor Spotlight Cards**: Implements cursor-tracking visual spotlight hover effects powered by Framer Motion to elevate card containers across landing and dashboard interfaces.
+* **Subscription Pricing Tier Showcase**: Interactive pricing layouts detailing plan options (Free vs. Premium credits) and highlighting upcoming Stripe checkout integration.
 * **Secure Session Guards**: Implements Next.js middleware and JWT Session validations via Clerk, safeguarding database write calls and customized student panels.
-* **Modern & Accessible UX**: Styled with premium HSL-tailored dark modes, smooth hover and entrance transitions (powered by Framer Motion), and customizable dialog modules.
+* **Cohesive Dark Theme Aesthetics**: Styled with premium HSL-tailored dark modes, smooth hover and entrance transitions, custom alerts, scrollbars, and dark-theme toast alerts.
 
 ---
 
@@ -159,11 +164,12 @@ The code directory is structured logically to separate component libraries, API 
 ai-course-generator/
 ├── app/                          # Next.js App Router (Entrypoint)
 │   ├── (auth)/                   # Authentication pages (Sign-in, Sign-up) managed via Clerk
-│   ├── _components/              # Shared components (Header, Hero, PrismaComponents, PricingSection, TestimonialsSection)
+│   ├── _components/              # Shared layout components (Header, Hero, SpotlightCard, PricingSection, TestimonialsSection)
 │   ├── _context/                 # UserInputContext for state management throughout wizard stages
 │   ├── _shared/                  # Utilities, constant schemas, and formatting helpers
 │   ├── course/
-│   │   └── [courseId]/           # Dynamic learning portal rendering structured chapters and videos
+│   │   └── [courseId]/           # Dynamic learning portal layout and rendering layers
+│   │       └── start/            # Sidebar-driven study view displaying markdown chapters and videos
 │   ├── create-course/            # Multistep wizard orchestrator
 │   │   ├── _components/          # Wizard form sheets, topic options, and loading modals
 │   │   ├── [courseId]/
@@ -171,6 +177,9 @@ ai-course-generator/
 │   │   │   └── page.jsx          # Chapter compiler logic interfacing with backend and APIs
 │   │   └── page.jsx              # Creation entry wizard managing step transitions
 │   ├── dashboard/                # Main student dashboard listing active courses and metrics
+│   │   ├── _components/          # Dashboard sub-components (Sidebar, CourseCard, UserCourseList, DropDown)
+│   │   ├── logout/               # Programmatic logout page and custom confirmation modal
+│   │   └── page.jsx              # Dashboard root display
 │   ├── globals.css               # Main styling manifest containing custom keyframes, scrollbars, and design variables
 │   ├── layout.js                 # Global HTML shell injection and Provider wrappers
 │   └── page.js                   # Public landing page showcasing application value proposition
