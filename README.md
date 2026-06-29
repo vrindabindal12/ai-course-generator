@@ -161,7 +161,7 @@ sequenceDiagram
 The code directory is structured logically to separate component libraries, API endpoints, schema definitions, and third-party configuration clients.
 
 ```
-ai-course-generator/
+course-generator/
 ├── app/                          # Next.js App Router (Entrypoint)
 │   ├── (auth)/                   # Authentication pages (Sign-in, Sign-up) managed via Clerk
 │   ├── _components/              # Shared layout components (Header, Hero, SpotlightCard, PricingSection, TestimonialsSection)
@@ -282,8 +282,8 @@ Follow these structured instructions to configure, initialize, and run a local i
 ### Step 1: Clone Repository & Install Dependencies
 First, open your terminal and download the repository files:
 ```bash
-git clone https://github.com/your-username/ai-course-generator.git
-cd ai-course-generator
+git clone https://github.com/vrindabindal12/course-generator.git
+cd course-generator
 npm install
 ```
 
